@@ -10,7 +10,7 @@ class HelpSpaceServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        HelpSpace::sidebar(function(HelpSpaceRequest $request) {
+        HelpSpace::sidebar(function (HelpSpaceRequest $request) {
             return "HTML about {$request->email()}";
         });
     }
