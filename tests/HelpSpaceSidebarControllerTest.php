@@ -18,15 +18,10 @@ it('can render the content of the sidebar', function () {
     $email = 'john@example.com';
 
     $response = $this
-        ->postJson('help-space',
-            ['from_contact' => ['value' => $email]],
-            [
-                'signature' => hash_hmac(
-                    'sha256',
-                    json_encode(['from_contact' => ['value' => $email]]),
-                    config('help-space.secret'),
-                ),
-            ]
+        ->postJson(
+            uri: 'help-space',
+            data: ['from_contact' => ['value' => $email]],
+            headers: ['signature' => calculateSignature($email)]
         )
         ->assertSuccessful()
         ->json();
@@ -37,17 +32,17 @@ it('can render the content of the sidebar', function () {
 it('will return forbidden for a wrongly signed help-space request', function () {
     $this
         ->postJson(
-            'help-space',
-            ['from_contact' => ['value' => 'user@example.com']],
-            [
-                'signature' => hash_hmac('sha256', json_encode(['from_contact' => ['value' => 'tampered-payload']]), config('services.help-space.secret')),
-            ]
+            uri: 'help-space',
+            data: ['from_contact' => ['value' => 'john@example.com']],
+            headers: ['signature' => calculateSignature('invalid-value')]
         )
         ->assertForbidden();
 });
 
 it('will return forbidden for non signed HelpSpace request', function () {
     $this
-        ->postJson('help-space', ['from_contact' => ['value' => 'john@example.com']])
+        ->postJson(
+            uri: 'help-space',
+            data: ['from_contact' => ['value' => 'john@example.com']])
         ->assertForbidden();
 });

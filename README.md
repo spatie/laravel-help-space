@@ -112,6 +112,17 @@ class HelpSpaceServiceProvider extends ServiceProvider
 
 The callable in `sidebar` will be executed whenever HelpSpace sends a request to your app. The `email()` method of   the given `HelpSpaceRequest` will contain the email address of the person that opened the ticket.
 
+## Preview the content of the sidebar
+
+When working on the view that returns the HTML of the sidebar, it can be handy to preview it locally, instead of letting HelpScout sending requests.
+
+To see the HTML for a given email address, you can use the `help-space:render-sidebar` command.
+
+```bash
+# returns the HTML for the given email address
+php artisan help-space:render-sidebar --email=john@example.com
+```
+
 ## Testing
 
 ```bash
