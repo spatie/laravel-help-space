@@ -2,9 +2,9 @@
 
 namespace Spatie\HelpSpace;
 
+use Spatie\HelpSpace\Commands\HelpSpaceCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Spatie\HelpSpace\Commands\HelpSpaceCommand;
 
 class HelpSpaceServiceProvider extends PackageServiceProvider
 {
