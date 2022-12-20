@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Spatie\HelpSpace\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class HelpSpaceCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-help-space';
 
     public $description = 'My command';
 
