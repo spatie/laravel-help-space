@@ -1,18 +1,17 @@
 <?php
 
-use App\Http\Api\Controllers\HelpSpaceController;
 use Illuminate\Support\Facades\Route;
 use Spatie\HelpSpace\Facades\HelpSpace;
 use Spatie\HelpSpace\Http\Requests\HelpSpaceRequest;
 
-beforeEach(function() {
-   HelpSpace::sidebar(function(HelpSpaceRequest $request) {
+beforeEach(function () {
+    HelpSpace::sidebar(function (HelpSpaceRequest $request) {
         return "content of sidebar for user {$request->email()}";
-   });
+    });
 
-   Route::helpSpaceSidebar();
+    Route::helpSpaceSidebar();
 
-   config()->set('help-space.secret', 'my-secret');
+    config()->set('help-space.secret', 'my-secret');
 });
 
 it('can render the content of the sidebar', function () {
@@ -35,7 +34,7 @@ it('can render the content of the sidebar', function () {
     expect($response['html'])->toBe('content of sidebar for user john@example.com');
 });
 
-it('will return forbidden for a wrongly signed help-space request', function() {
+it('will return forbidden for a wrongly signed help-space request', function () {
     $this
         ->postJson(
             'help-space',
@@ -47,7 +46,7 @@ it('will return forbidden for a wrongly signed help-space request', function() {
         ->assertForbidden();
 });
 
-it('will return forbidden for non signed HelpSpace request', function() {
+it('will return forbidden for non signed HelpSpace request', function () {
     $this
         ->postJson('help-space', ['from_contact' => ['value' => 'john@example.com']])
         ->assertForbidden();
