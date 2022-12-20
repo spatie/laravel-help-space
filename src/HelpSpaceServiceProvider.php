@@ -17,6 +17,7 @@ class HelpSpaceServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-help-space')
             ->hasConfigFile()
+            ->publishesServiceProvider('HelpSpaceServiceProvider')
             ->hasCommand(RenderSidebarCommand::class)
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
