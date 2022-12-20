@@ -9,6 +9,8 @@ class HelpSpaceSidebarController
 {
     public function __invoke(HelpSpaceRequest $request, HelpSpace $helpSpace)
     {
-        return $helpSpace->sidebarContents($request);
+        $html = $helpSpace->sidebarContents($request);
+
+        return response()->json(['html' => $html]);
     }
 }
