@@ -5,7 +5,26 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/spatie/laravel-help-space/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/spatie/laravel-help-space/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-help-space.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-help-space)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+[HelpSpace](https://helpspace.com) is a beautiful help desk service. On of its features is that it can display a sidebar with extra information about the person that opened a ticket. HelpSpace sends a request to your app to get the HTML content to populate that sidebar. Our package makes it easy to validate if an incoming request from HelpSpace is valid and allows you to respond to it.
+
+When installed, this is how you can respond to an incoming request from HelpSpace.
+
+```php
+use Spatie\HelpSpace\Http\Requests\HelpSpaceRequest;
+
+HelpSpace::sidebar(function(HelpSpaceRequest $request) {
+    $user = User::firstWhere('email', $request->email())
+    
+    if (! $user) {
+        return 'No user found'
+    }
+    
+    // any view of your own in which you render the html
+    // to be displayed at HelpSpace
+    return view('help-space.sidebar', compact('user'))
+})
+```
+
 
 ## Support us
 
@@ -23,38 +42,72 @@ You can install the package via composer:
 composer require spatie/laravel-help-space
 ```
 
-You can publish and run the migrations with:
+To publish the config file and to create the `app/Providers/HelpSpaceServiceProvider.app` class in your app, run this command.
 
 ```bash
-php artisan vendor:publish --tag="laravel-help-space-migrations"
-php artisan migrate
+php artisan help-space:install
 ```
 
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="laravel-help-space-config"
-```
-
-This is the contents of the published config file:
+This is the contents of the published config file at `config/help-space.php` app:
 
 ```php
 return [
+    /*
+     * The secret used to verify if the incoming HelpSpace secret is valid
+     */
+    'secret' => env('HELP_SPACE_SECRET'),
 ];
 ```
 
-Optionally, you can publish the views using
+Next, In your `.env` file, you must set a new env-variable called  `HELP_SPACE_SECRET` to a random string. At [HelpSpace](https://helpspace.com) you must navigate to the "Custom Ticket sidebar" in the integration settings. There you must input that random string.  This secret will be used to verify if an incoming request is really coming from HelpSpace.
 
-```bash
-php artisan vendor:publish --tag="laravel-help-space-views"
+![img](TODO)
+
+Next, you must add this to your routes file, preferably `routes/api.php` so that your app doesn't start a session when a new request comes in from HelpSpace.
+
+```php
+// in a routes file, preferable in routes/api.php
+
+Route::helpSpaceSidebar();
+```
+
+The above route will register a route with URL `https://yourdomain.com/api/help-space` (when you registered it in the api.php routes file.)
+
+Finally, You must input the URL of that route in the "Endpoint URL" field at HelpSpace.
+
+If you want to have a different URL, you can pass your preferred segment to `helpSpaceSidebar()`
+
+```php
+// in a routes file, preferable in routes/api.php
+
+Route::helpSpaceSidebar('your-custom-segment');
 ```
 
 ## Usage
 
+If you ran the install command from the section above, then your application a `HelpSpaceServiceProvider.php` service provider in `app/Providers`. This is the content.
+
 ```php
-$helpSpace = new Spatie\HelpSpace();
-echo $helpSpace->echoPhrase('Hello, Spatie!');
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Spatie\HelpSpace\Facades\HelpSpace;
+use Spatie\HelpSpace\Http\Requests\HelpSpaceRequest;
+
+class HelpSpaceServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+        HelpSpace::sidebar(function(HelpSpaceRequest $request) {
+            // $user = User::firstWhere('email', $request->email();
+        
+            return "HTML about {$request->email()}";
+        });
+    }
+}
 ```
+
+The callable in `sidebar` will be executed whenever HelpSpace sends a request to your app. The `email()` method of   the given `HelpSpaceRequest` will contain the email address of the person that opened the ticket.
 
 ## Testing
 
