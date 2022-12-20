@@ -20,15 +20,14 @@ HelpSpace::sidebar(function(HelpSpaceRequest $request) {
     $user = User::firstWhere('email', $request->email())
     
     if (! $user) {
-        return 'No user found'
+        return 'No user found';
     }
     
     // any view of your own in which you render the html
     // to be displayed at HelpSpace
-    return view('help-space.sidebar', compact('user'))
+    return view('help-space.sidebar', compact('user'));
 })
 ```
-
 
 ## Support us
 
