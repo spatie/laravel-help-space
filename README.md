@@ -1,4 +1,4 @@
-# Integrate Helpspace in your Laravel app
+# Integrate HelpSpace in your Laravel app
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-help-space.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-help-space)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/spatie/laravel-help-space/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/spatie/laravel-help-space/actions?query=workflow%3Arun-tests+branch%3Amain)
