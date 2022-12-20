@@ -12,7 +12,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        View::addLocation(__DIR__ . '/TestSupport/resources/views');
+        View::addLocation(__DIR__.'/TestSupport/resources/views');
     }
 
     protected function getPackageProviders($app)

@@ -30,7 +30,7 @@ it('can render the content of the sidebar', function () {
 });
 
 it('can render the content of the sidebar using a view', function () {
-    HelpSpace::sidebar(fn() => view('testView'));
+    HelpSpace::sidebar(fn () => view('testView'));
 
     $response = $this
         ->postJson(

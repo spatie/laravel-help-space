@@ -19,7 +19,7 @@ class HelpSpace
 
     public function sidebarContents(HelpSpaceRequest $request): string
     {
-        $html =  $this->sidebarClosure
+        $html = $this->sidebarClosure
             ? ($this->sidebarClosure)($request)
             : '';
 
