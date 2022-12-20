@@ -2,14 +2,17 @@
 
 namespace Spatie\HelpSpace\Facades;
 
+use Closure;
 use Illuminate\Support\Facades\Facade;
 
-/**
- * @see \Spatie\HelpSpace\HelpSpace
- */
 class HelpSpace extends Facade
 {
-    protected static function getFacadeAccessor()
+    /**
+     * @method static \Spatie\HelpSpace\HelpSpace sidebar(Closure $closure)
+     *
+     * @see \Spatie\HelpSpace\HelpSpace
+     */
+    public static function getFacadeAccessor()
     {
         return \Spatie\HelpSpace\HelpSpace::class;
     }
