@@ -101,9 +101,7 @@ class HelpSpaceServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        HelpSpace::sidebar(function(HelpSpaceRequest $request) {
-            // $user = User::firstWhere('email', $request->email();
-        
+        HelpSpace::sidebar(function(HelpSpaceRequest $request) {        
             return "HTML about {$request->email()}";
         });
     }
@@ -111,6 +109,16 @@ class HelpSpaceServiceProvider extends ServiceProvider
 ```
 
 The callable in `sidebar` will be executed whenever HelpSpace sends a request to your app. The `email()` method of   the given `HelpSpaceRequest` will contain the email address of the person that opened the ticket.
+
+Instead of returning a string, you can also return a view.
+
+```php
+HelpSpace::sidebar(function(HelpSpaceRequest $request) {
+    $user = User::firstWhere('email', $request->email());
+    
+    return view('your-own-view', compact('user'));        
+}
+```
 
 ## Preview the content of the sidebar
 

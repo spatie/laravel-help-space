@@ -3,6 +3,7 @@
 namespace Spatie\HelpSpace;
 
 use Closure;
+use Illuminate\View\View;
 use Spatie\HelpSpace\Http\Requests\HelpSpaceRequest;
 
 class HelpSpace
@@ -16,10 +17,16 @@ class HelpSpace
         return $this;
     }
 
-    public function sidebarContents(HelpSpaceRequest $request)
+    public function sidebarContents(HelpSpaceRequest $request): string
     {
-        return $this->sidebarClosure
+        $html =  $this->sidebarClosure
             ? ($this->sidebarClosure)($request)
             : '';
+
+        if ($html instanceof View) {
+            $html = $html->render();
+        }
+
+        return $html;
     }
 }

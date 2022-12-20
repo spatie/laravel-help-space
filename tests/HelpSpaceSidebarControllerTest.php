@@ -29,6 +29,21 @@ it('can render the content of the sidebar', function () {
     expect($response['html'])->toBe('content of sidebar for user john@example.com');
 });
 
+it('can render the content of the sidebar using a view', function () {
+    HelpSpace::sidebar(fn() => view('testView'));
+
+    $response = $this
+        ->postJson(
+            uri: 'help-space',
+            data: ['from_contact' => ['value' => 'john@example.com']],
+            headers: ['signature' => calculateSignature('john@example.com')]
+        )
+        ->assertSuccessful()
+        ->json();
+
+    expect($response['html'])->toContain('This is a test view');
+});
+
 it('will return forbidden for a wrongly signed help-space request', function () {
     $this
         ->postJson(

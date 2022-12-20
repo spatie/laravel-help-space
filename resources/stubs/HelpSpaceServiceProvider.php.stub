@@ -12,6 +12,14 @@ class HelpSpaceServiceProvider extends ServiceProvider
     {
         HelpSpace::sidebar(function (HelpSpaceRequest $request) {
             return "HTML about {$request->email()}";
+
+            /*
+             * instead of a string, you can also return your own view here
+             *
+             * $user = User::firstWhere('email', $request->email());
+             *
+             * return view('your-own-view', compact('user'));
+             */
         });
     }
 }

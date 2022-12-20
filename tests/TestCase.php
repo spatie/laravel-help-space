@@ -2,7 +2,7 @@
 
 namespace Spatie\HelpSpace\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\View;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\HelpSpace\HelpSpaceServiceProvider;
 
@@ -12,9 +12,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Spatie\\HelpSpace\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        View::addLocation(__DIR__ . '/TestSupport/resources/views');
     }
 
     protected function getPackageProviders($app)
@@ -22,15 +20,5 @@ class TestCase extends Orchestra
         return [
             HelpSpaceServiceProvider::class,
         ];
-    }
-
-    public function getEnvironmentSetUp($app)
-    {
-        config()->set('database.default', 'testing');
-
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_laravel-help-space_table.php.stub';
-        $migration->up();
-        */
     }
 }
