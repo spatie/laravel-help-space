@@ -18,13 +18,13 @@ class HelpSpaceServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasCommand(RenderSidebarCommand::class);
 
-        Route::macro('helpSpaceSidebar', function(string $url ='help-space') {
+        Route::macro('helpSpaceSidebar', function (string $url = 'help-space') {
             Route::post($url, HelpSpaceSidebarController::class)->middleware(IsValidHelpSpaceRequest::class);
         });
     }
 
     public function registeringPackage()
     {
-        $this->app->scoped(HelpSpace::class, fn() => new HelpSpace());
+        $this->app->scoped(HelpSpace::class, fn () => new HelpSpace());
     }
 }
