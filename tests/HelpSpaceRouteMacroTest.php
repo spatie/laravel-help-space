@@ -12,7 +12,6 @@ beforeEach(function () {
     config()->set('help-space.secret', 'my-secret');
 
     Route::helpSpaceSidebar('other-url');
-
 });
 
 it('can render the content of the sidebar on the macro route', function () {
