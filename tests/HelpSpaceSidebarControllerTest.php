@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Spatie\HelpSpace\Facades\HelpSpace;
 use Spatie\HelpSpace\Http\Requests\HelpSpaceRequest;
 
