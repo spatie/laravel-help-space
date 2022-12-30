@@ -59,32 +59,31 @@ return [
      * The secret used to verify if the incoming HelpSpace secret is valid
      */
     'secret' => env('HELP_SPACE_SECRET'),
+
+    /*
+     * The package will automatically register this route to handle incoming
+     * requests from HelpSpace.
+     *
+     * You can set this to `null` if you prefer to register your route manually.
+     */
+    'url' => '/help-space',
+
+    /*
+     * These middleware will be applied on the automatically registered route.
+     */
+    'middleware' => [
+        Spatie\HelpSpace\Http\Middleware\IsValidHelpSpaceRequest::class,
+        'api',
+    ],
 ];
 ```
 
 Next, In your `.env` file, you must set a new env-variable called  `HELP_SPACE_SECRET` to a random string. At [HelpSpace](https://helpspace.com) you must navigate to the "Custom Ticket sidebar" in the integration settings. There you must input that random string.  This secret will be used to verify if an incoming request is really coming from HelpSpace.
 
+The package will automatically register a route at `/help-space`
+
 ![settings](https://github.com/spatie/laravel-help-space/blob/main/docs/settings.jpg?raw=true)
 
-Next, you must add this to your routes file, preferably `routes/api.php` so that your app doesn't start a session when a new request comes in from HelpSpace.
-
-```php
-// in a routes file, preferable in routes/api.php
-
-Route::helpSpaceSidebar();
-```
-
-The above route will register a route with URL `https://yourdomain.com/api/help-space` (when you registered it in the api.php routes file.)
-
-Finally, You must input the URL of that route in the "Endpoint URL" field at HelpSpace.
-
-If you want to have a different URL, you can pass your preferred segment to `helpSpaceSidebar()`
-
-```php
-// in a routes file, preferable in routes/api.php
-
-Route::helpSpaceSidebar('your-custom-segment');
-```
 
 ## Usage
 
@@ -130,6 +129,24 @@ To see the HTML for a given email address, you can use the `help-space:render-si
 # returns the HTML for the given email address
 php artisan help-space:render-sidebar --email=john@example.com
 ```
+
+## Customizing the registered route
+
+The package will automatically register a route at `/help-space`. You can change this value in the `help-space.php` config file.
+
+Alternatively, you can register your own route.
+
+First, you must set the `url` key in the `help-space.php` config file to `null`
+
+Next, you must add this to your routes file, preferably `routes/api.php` so that your app doesn't start a session when a new request comes in from HelpSpace.
+
+```php
+// in a routes file, preferable in routes/api.php
+
+Route::helpSpaceSidebar('your-custom-segment');
+```
+
+The above route will register a route with URL `https://yourdomain.com/api/your-custom-segment` (when you registered it in the api.php routes file.)
 
 ## Testing
 

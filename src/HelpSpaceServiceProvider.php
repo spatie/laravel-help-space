@@ -31,6 +31,13 @@ class HelpSpaceServiceProvider extends PackageServiceProvider
         });
     }
 
+    public function bootingPackage()
+    {
+        if (config('help-space.url') !== null) {
+            Route::post(config('help-space.url'), HelpSpaceSidebarController::class)->middleware(config('help-space.middleware'));
+        }
+    }
+
     public function registeringPackage()
     {
         $this->app->scoped(HelpSpace::class, fn () => new HelpSpace());
