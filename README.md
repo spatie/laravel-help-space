@@ -80,10 +80,9 @@ return [
 
 Next, In your `.env` file, you must set a new env-variable called  `HELP_SPACE_SECRET` to a random string. At [HelpSpace](https://helpspace.com) you must navigate to the "Custom Ticket sidebar" in the integration settings. There you must input that random string.  This secret will be used to verify if an incoming request is really coming from HelpSpace.
 
-The package will automatically register a route at `/help-space`
-
 ![settings](https://github.com/spatie/laravel-help-space/blob/main/docs/settings.jpg?raw=true)
 
+The package will automatically register a route at `/help-space`. This route [can be customized](#customizing-the-registered-route).
 
 ## Usage
 
