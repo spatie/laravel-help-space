@@ -2,7 +2,6 @@
 
 namespace Spatie\HelpSpace\Facades;
 
-use Closure;
 use Illuminate\Support\Facades\Facade;
 
 class HelpSpace extends Facade

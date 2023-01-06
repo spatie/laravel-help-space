@@ -5,6 +5,7 @@ namespace Spatie\HelpSpace\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Spatie\HelpSpace\Facades\HelpSpace;
 
 class IsValidHelpSpaceRequest
 {
