@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Facade;
 class HelpSpace extends Facade
 {
     /**
-     * @method static \Spatie\HelpSpace\HelpSpace sidebar(Closure $closure)
-     *
-     * @see \Spatie\HelpSpace\HelpSpace
+     * @mixin \Spatie\HelpSpace\HelpSpace
      */
     public static function getFacadeAccessor()
     {
